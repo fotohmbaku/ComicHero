@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ComicHero</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ef4444'/%3E%3Cpath d='M9 8h6a5 5 0 0 1 5 5v11a4 4 0 0 0-4-4H9zM23 8h0v12' stroke='white' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#/">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h6a4 4 0 0 1 4 4v10a3 3 0 0 0-3-3H4zM20 5h-3a3 3 0 0 0-3 3"/></svg>
+        </span>
+        <span class="brand-name">Comic<b>Hero</b></span>
+      </a>
+      <nav class="nav">
+        <a href="#/" data-nav="home">Home</a>
+        <a href="#/library" data-nav="library">Library</a>
+        <a href="#/history" data-nav="history">History</a>
+      </nav>
+      <div class="topbar-actions">
+        <button class="search-trigger" id="searchTrigger" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <span>Search</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <a class="btn btn-soft" href="#/library?filter=bookmarked" data-nav="bookmarks">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+          <span class="hide-sm">Bookmarks</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="app" class="app"></main>
+
+  <div class="palette" id="palette" hidden>
+    <div class="palette-backdrop" data-close></div>
+    <div class="palette-box" role="dialog" aria-label="Search series">
+      <div class="palette-input">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="paletteInput" type="text" placeholder="Search your library…" autocomplete="off" spellcheck="false">
+        <kbd>esc</kbd>
+      </div>
+      <ul class="palette-results" id="paletteResults"></ul>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <button class="to-top" id="toTop" type="button" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+  </button>
+
+  <script src="/app.js"></script>
+</body>
+</html>
