@@ -1,5 +1,7 @@
 # ComicHero
 
+By [Fotoh Mbaku](https://github.com/fotohmbaku)
+
 A comic and manhwa reader you host on your own computer (Mac or Windows) and read in any browser, including your
 iPhone, for example over Tailscale. Comics stay as zip files and are read straight out of the zip without
 unpacking, so large (multi-GB) archives are fine.
@@ -14,6 +16,33 @@ unpacking, so large (multi-GB) archives are fine.
 - **History**, and **⌘K** (or `/`) to search from anywhere.
 
 Progress, bookmarks and ratings are saved in `state.json` next to the server.
+
+## Screenshots
+
+![Home page with cover carousel, continue reading and top list](docs/screenshots/home.png)
+
+| Library | Comic page |
+| --- | --- |
+| ![Library with filters and sorting](docs/screenshots/library.png) | ![Comic page with rating, progress and chapters](docs/screenshots/series.png) |
+| **Reader** | **Search (⌘K)** |
+| ![Vertical-strip reader](docs/screenshots/reader.png) | ![Search palette](docs/screenshots/search.png) |
+
+<p align="center">
+  <img src="docs/screenshots/mobile-home.png" width="250" alt="Home on iPhone">
+  <img src="docs/screenshots/mobile-series.png" width="250" alt="Comic page on iPhone">
+  <img src="docs/screenshots/mobile-reader.png" width="250" alt="Reader on iPhone">
+</p>
+
+The comics in these screenshots are the original examples in [`examples/`](examples/).
+
+## Try it with the examples
+
+```
+python3 server.py examples
+```
+
+Then open http://localhost:7777. The [`examples/`](examples/) folder has eight small sample comics: seven in the
+manifest layout and one (`Paper Moon Café.cbz`) in the plain-folder layout described below.
 
 ## Running it
 

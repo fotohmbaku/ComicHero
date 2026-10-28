@@ -20,6 +20,7 @@ import re
 import socket
 import threading
 import time
+import unicodedata
 import zipfile
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -145,6 +146,8 @@ def describe(zf, fallback_title):
 
 
 def slugify(text):
+    # "Café" -> "cafe": split accents off their letters, then drop them
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-") or "comic"
 
 

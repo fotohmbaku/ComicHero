@@ -66,7 +66,8 @@
     if (d < 30 * DAY) return `${Math.floor(d / DAY)} days ago`;
     return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
   }
-  const gb = (bytes) => `${(bytes / 1e9).toFixed(1)} GB`;
+  const fileSize = (bytes) =>
+    bytes >= 1e9 ? `${(bytes / 1e9).toFixed(1)} GB` : bytes >= 1e6 ? `${Math.round(bytes / 1e6)} MB` : `${Math.max(1, Math.round(bytes / 1e3))} KB`;
 
   const icon = {
     star: '<svg viewBox="0 0 24 24"><path d="m12 2.5 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></svg>',
@@ -322,16 +323,21 @@
     let cur = Math.floor(pool.length / 2);
     const n = cards.length;
 
+    const scaleOf = (abs) => (abs === 0 ? 1.18 : 1 - Math.min(abs, 4) * 0.06);
+
     function layout() {
-      const narrow = window.innerWidth < 720;
-      const step = narrow ? 92 : 150;
+      const w = cards[0].offsetWidth;
+      const gap = window.innerWidth < 720 ? 10 : 16;
+      // centre-to-centre distance for each offset, so scaled cards sit side by side without overlapping
+      const dist = [0];
+      for (let k = 1; k <= n; k++) dist[k] = dist[k - 1] + (w * scaleOf(k - 1)) / 2 + gap + (w * scaleOf(k)) / 2;
       cards.forEach((c, i) => {
         let off = i - cur;
         if (off > n / 2) off -= n;
         if (off < -n / 2) off += n;
         const abs = Math.abs(off);
-        const scale = off === 0 ? 1.18 : 1 - Math.min(abs, 4) * 0.06;
-        c.style.transform = `translate(calc(-50% + ${off * step}px), -50%) scale(${scale})`;
+        const scale = scaleOf(abs);
+        c.style.transform = `translate(calc(-50% + ${Math.sign(off) * dist[abs]}px), -50%) scale(${scale})`;
         c.style.zIndex = String(20 - abs);
         c.style.opacity = abs > 4 ? "0" : String(1 - abs * 0.12);
         c.style.filter = off === 0 ? "none" : `brightness(${1 - abs * 0.12})`;
@@ -349,6 +355,15 @@
     }));
     let timer;
     const restart = () => { clearInterval(timer); timer = setInterval(() => go(1), 5000); };
+    // swipe on touch screens, where the arrows are hidden
+    const hero = document.getElementById("hero");
+    let touchX = null;
+    hero.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+    hero.addEventListener("touchend", (e) => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (touchX !== null && Math.abs(dx) > 40) { go(dx < 0 ? 1 : -1); restart(); }
+      touchX = null;
+    });
     window.addEventListener("resize", layout);
     layout();
     restart();
@@ -473,7 +488,7 @@
                   <span class="tag accent">${d.chapters.length} chapters</span>
                   <span class="tag">Ch ${fmtNum(first.number)}–${fmtNum(last.number)}</span>
                   <span class="tag">${s.pageCount.toLocaleString()} pages</span>
-                  <span class="tag">${gb(s.size)}</span>
+                  <span class="tag">${fileSize(s.size)}</span>
                   <span class="tag">Added ${ago(s.added * 1000)}</span>
                   ${status(s) === "completed" ? '<span class="tag green">Finished</span>' : ""}
                 </div>

@@ -70,6 +70,10 @@ class LibraryTest(unittest.TestCase):
         self.assertEqual(s.chapters[0]["pages"][1]["h"], 14081)
         self.assertEqual(s.cover, "aup/cover.webp")
 
+    def test_slugs_keep_accented_letters(self):
+        self.assertEqual(server.slugify("Paper Moon Café"), "paper-moon-cafe")
+        self.assertEqual(server.slugify("???"), "comic")
+
     def test_folder_comic_in_numeric_order(self):
         s = self.lib.series["my-folder-comic"]
         self.assertEqual(s.title, "My Folder Comic")
