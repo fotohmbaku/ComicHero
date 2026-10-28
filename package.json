@@ -1,0 +1,17 @@
+{
+  "name": "comichero",
+  "version": "0.1.0",
+  "description": "Self-hosted comic reader for your phone. Reads comics straight out of zip files.",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "yauzl": "^3.4.0"
+  }
+}
