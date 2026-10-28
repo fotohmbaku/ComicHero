@@ -2,7 +2,7 @@
 
 By [Fotoh Mbaku](https://github.com/fotohmbaku)
 
-A comic and manhwa reader you host on your own computer (Mac or Windows) and read in any browser, including your
+A comic reader you host on your own computer (Mac or Windows) and read in any browser, including your
 iPhone, for example over Tailscale. Comics stay as zip files and are read straight out of the zip without
 unpacking, so large (multi-GB) archives are fine.
 
